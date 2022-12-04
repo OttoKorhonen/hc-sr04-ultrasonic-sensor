@@ -2,8 +2,12 @@
 
 This driver for HC-SR04 Ultrasonic sensor is written in Python 3 programming language.
 
-## Overview
-HC-SR04 ultrasonic sensor can detect distances between 2cm to 400cm.
-When powered the sensors trigger pin is set HIGH for 10 microseconds. While set HIGH the sensor transmits pattern of 8 pulses.
+## Requirements
+This driver was written and run on Raspberry Pi 3 model b+.
 
-After transmitting pulses the trigger pin is set LOW and the echo pin is set HIGH until it receives the echo signal sent by trigger pin. The echo pin will be automatically set LOW after 38 ms if pulses are not reflected back.
+For pin configuration I used RPi.GPIO module which can be installed with pip.
+
+> pip install RPi.GPIO
+
+## Image of HC-SR04
+![hc-sr04](https://media-cdn.elecrow.com/catalog/product/cache/f8158826193ba5faa8b862a9bd1eb9e9/h/c/hc-sr04_ultrasonic_ranging_sensor.jpg)

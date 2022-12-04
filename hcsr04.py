@@ -10,7 +10,12 @@ class Hcsr04:
      The measurements have a deviation of a few centimeters, so the results are indicative.
     '''
 
-    def __init__(self, trigger_pin: int, echo_pin: int):
+    def __init__(self, trigger_pin: int, echo_pin: int, unit='metric'):
+        self.units = ['metric', 'imperial']
+        if unit in self.units:
+            self.unit = unit
+        else:
+            raise ValueError
         self.time = None
         self.echo_time = 0
         self.echo_pin = echo_pin
@@ -35,8 +40,12 @@ class Hcsr04:
         Value returned by pulse_time is divided by 1000 to get time in microseconds.
         '''
         pulse_time = self.trigger_on_and_wait()
-        print(f'{(self.echo_speed/10000) * (pulse_time/1000)/2:.2f} cm')
-        return f'{(self.echo_speed/10000) * (pulse_time/1000)/2:.2f}'
+        if self.unit == 'metric':
+            print(f'{(self.echo_speed/10000) * (pulse_time/1000)/2:.2f} cm')
+            return f'{(self.echo_speed/10000) * (pulse_time/1000)/2:.2f}'
+        if self.unit == 'imperial':
+            print(f'{((self.echo_speed/10000) * (pulse_time/1000)/2)/2.5:.2f} inches')
+            return f'{((self.echo_speed/10000) * (pulse_time/1000)/2)/2.5:.2f}'
 
 
     def time_pulse(self):
@@ -72,3 +81,14 @@ class Hcsr04:
         return pulse_time
 
 
+# if __name__ == '__main__':
+#     try:
+#         h = Hcsr04(13, 11)
+#         h.setup()
+#         while True:
+#             h.calclulate_distance()
+#             sleep(0.5)
+#     except KeyboardInterrupt:
+#         pass
+#     finally:
+#         GPIO.cleanup()
